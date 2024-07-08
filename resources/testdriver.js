@@ -84,6 +84,15 @@
                     on: function (callback) {
                         return window.test_driver_internal.bidi.log.entry_added.on(callback);
                     },
+                    once: function () {
+                        return new Promise(resolve => {
+                            const remove_handler = window.test_driver_internal.bidi.log.entry_added.on(
+                                data => {
+                                    resolve(data);
+                                    remove_handler();
+                                });
+                        });
+                    },
                 }
             }
         },
